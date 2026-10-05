@@ -1,0 +1,347 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "TripCraft API - Travel Itinerary Planner",
+    "version": "1.0.0",
+    "description": "Comprehensive REST API for TripCraft - A travel itinerary planner application built with Node.js, Express.js, MongoDB, and Firebase Storage."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Local Development Server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Enter your JWT token obtained from /api/auth/login or /api/auth/register"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "summary": "Register a new user",
+        "tags": ["Authentication"],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "email", "password"],
+                "properties": {
+                  "name": { "type": "string", "example": "Alex Doe" },
+                  "email": { "type": "string", "example": "alex@example.com" },
+                  "password": { "type": "string", "example": "password123" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "User registered successfully" },
+          "400": { "description": "Validation error or user already exists" }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "Login user and get JWT token",
+        "tags": ["Authentication"],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": { "type": "string", "example": "alex@example.com" },
+                  "password": { "type": "string", "example": "password123" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Login successful" },
+          "401": { "description": "Invalid credentials" }
+        }
+      }
+    },
+    "/api/trips": {
+      "get": {
+        "summary": "Get all trips for logged in user",
+        "tags": ["Trips"],
+        "parameters": [
+          { "name": "status", "in": "query", "schema": { "type": "string", "enum": ["planning", "ongoing", "completed", "cancelled"] } },
+          { "name": "sort", "in": "query", "schema": { "type": "string" }, "description": "Sort query (e.g. startDate or -createdAt)" }
+        ],
+        "responses": {
+          "200": { "description": "List of user trips" }
+        }
+      },
+      "post": {
+        "summary": "Create a new trip",
+        "tags": ["Trips"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["title", "destination", "startDate", "endDate"],
+                "properties": {
+                  "title": { "type": "string", "example": "European Summer Journey" },
+                  "description": { "type": "string", "example": "Tour of France, Italy, and Switzerland" },
+                  "destination": {
+                    "type": "object",
+                    "properties": {
+                      "name": { "type": "string", "example": "Paris" },
+                      "country": { "type": "string", "example": "France" }
+                    }
+                  },
+                  "startDate": { "type": "string", "format": "date", "example": "2026-07-01" },
+                  "endDate": { "type": "string", "format": "date", "example": "2026-07-15" },
+                  "budget": {
+                    "type": "object",
+                    "properties": {
+                      "totalBudget": { "type": "number", "example": 3500 },
+                      "currency": { "type": "string", "example": "EUR" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Trip created successfully" }
+        }
+      }
+    },
+    "/api/trips/{id}": {
+      "get": {
+        "summary": "Get trip details by ID with itineraries and collaborators",
+        "tags": ["Trips"],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": { "description": "Trip details" },
+          "404": { "description": "Trip not found" }
+        }
+      },
+      "put": {
+        "summary": "Update trip details",
+        "tags": ["Trips"],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "startDate": { "type": "string", "format": "date" },
+                  "endDate": { "type": "string", "format": "date" },
+                  "status": { "type": "string", "enum": ["planning", "ongoing", "completed", "cancelled"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Trip updated successfully" }
+        }
+      },
+      "delete": {
+        "summary": "Delete a trip",
+        "tags": ["Trips"],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": { "description": "Trip deleted successfully" }
+        }
+      }
+    },
+    "/api/trips/{id}/itinerary": {
+      "get": {
+        "summary": "Get day-by-day itineraries for a trip",
+        "tags": ["Itinerary"],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": { "description": "Itinerary list" }
+        }
+      },
+      "post": {
+        "summary": "Add day-by-day itinerary activities to trip",
+        "tags": ["Itinerary"],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["dayNumber"],
+                "properties": {
+                  "dayNumber": { "type": "integer", "example": 1 },
+                  "title": { "type": "string", "example": "Arrival & Eiffel Tower" },
+                  "date": { "type": "string", "format": "date", "example": "2026-07-01" },
+                  "activities": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["activity"],
+                      "properties": {
+                        "time": { "type": "string", "example": "10:00 AM" },
+                        "activity": { "type": "string", "example": "Visit Eiffel Tower" },
+                        "location": { "type": "string", "example": "Champ de Mars" },
+                        "cost": { "type": "number", "example": 28 },
+                        "notes": { "type": "string", "example": "Book tickets in advance online" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Itinerary day created or updated" }
+        }
+      }
+    },
+    "/api/trips/{id}/share": {
+      "post": {
+        "summary": "Share trip with collaborators",
+        "tags": ["Collaborators"],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": { "type": "string", "example": "friend@example.com" },
+                  "role": { "type": "string", "enum": ["viewer", "editor"], "default": "viewer" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Trip shared successfully" }
+        }
+      }
+    },
+    "/api/trips/search": {
+      "get": {
+        "summary": "Search trips by keyword (e.g. europe)",
+        "tags": ["Search"],
+        "parameters": [
+          { "name": "keyword", "in": "query", "required": true, "schema": { "type": "string", "example": "europe" } }
+        ],
+        "responses": {
+          "200": { "description": "Matching trips" }
+        }
+      }
+    },
+    "/api/trips/{id}/photos": {
+      "post": {
+        "summary": "Upload trip photo to Firebase Storage",
+        "tags": ["Photos & Storage"],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "photo": { "type": "string", "format": "binary" },
+                  "isCover": { "type": "boolean", "default": false },
+                  "caption": { "type": "string", "example": "Sunset at the Eiffel Tower" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Photo uploaded successfully" }
+        }
+      }
+    },
+    "/api/trips/{id}/expenses": {
+      "get": {
+        "summary": "Get budget & expense breakdown for trip",
+        "tags": ["Budget & Expenses"],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": { "description": "Expenses details with total spent and breakdown" }
+        }
+      },
+      "post": {
+        "summary": "Add expense to trip",
+        "tags": ["Budget & Expenses"],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["title", "amount"],
+                "properties": {
+                  "title": { "type": "string", "example": "Dinner at Le Bistro" },
+                  "amount": { "type": "number", "example": 75.50 },
+                  "category": { "type": "string", "enum": ["food", "transportation", "lodging", "activities", "shopping", "other"] },
+                  "currency": { "type": "string", "example": "EUR" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Expense logged" }
+        }
+      }
+    },
+    "/api/weather": {
+      "get": {
+        "summary": "Get live weather forecast for city",
+        "tags": ["Weather"],
+        "security": [],
+        "parameters": [
+          { "name": "city", "in": "query", "schema": { "type": "string", "example": "Paris" } }
+        ],
+        "responses": {
+          "200": { "description": "Live weather forecast" }
+        }
+      }
+    },
+    "/api/trips/{id}/weather": {
+      "get": {
+        "summary": "Get live destination weather for trip",
+        "tags": ["Weather"],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": { "description": "Weather forecast for destination of trip" }
+        }
+      }
+    }
+  }
+}
