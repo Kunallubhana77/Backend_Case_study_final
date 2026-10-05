@@ -5,169 +5,52 @@ base_dir = os.path.dirname(os.path.abspath(__file__))
 screenshot_dir = os.path.join(base_dir, "screenshot")
 os.makedirs(screenshot_dir, exist_ok=True)
 
-# 1. FLOWCHART HTML
 flowchart_html = """<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     background: #FFFFFF;
     font-family: 'Inter', -apple-system, sans-serif;
     color: #1E293B;
-    padding: 40px;
+    padding: 30px 20px;
     width: 950px;
     margin: 0 auto;
   }
   .header {
     text-align: center;
-    margin-bottom: 35px;
+    margin-bottom: 25px;
   }
   .univ {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     color: #800020;
     text-transform: uppercase;
     letter-spacing: 1.5px;
   }
   .title {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 800;
     color: #0F172A;
-    margin: 6px 0;
+    margin: 5px 0;
   }
   .subtitle {
-    font-size: 14px;
+    font-size: 13.5px;
     color: #64748B;
   }
-  .flow-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-  }
-  .node {
-    width: 320px;
-    padding: 14px 20px;
-    border-radius: 12px;
-    text-align: center;
-    font-size: 13.5px;
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-    position: relative;
-    z-index: 2;
-  }
-  .node-start {
-    background: #0F172A;
-    color: #FFFFFF;
-    border-radius: 30px;
-    width: 220px;
-    font-weight: 700;
-    letter-spacing: 1px;
-  }
-  .node-process {
-    background: #F8FAFC;
-    border: 2px solid #CBD5E1;
-    color: #1E293B;
-  }
-  .node-auth {
-    background: #EFF6FF;
-    border: 2px solid #3B82F6;
-    color: #1E3A8A;
-  }
-  .decision {
-    width: 220px;
-    height: 100px;
-    background: #FEF3C7;
-    border: 2px solid #F59E0B;
-    transform: rotate(45deg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-    z-index: 2;
-    margin: 25px 0;
-  }
-  .decision-inner {
-    transform: rotate(-45deg);
-    text-align: center;
-    font-size: 12px;
-    font-weight: 700;
-    color: #92400E;
-    line-height: 1.3;
-    padding: 10px;
-  }
-  .node-pass {
-    background: #ECFDF5;
-    border: 2px solid #10B981;
-    color: #065F46;
-  }
-  .node-fail {
-    background: #FEF2F2;
-    border: 2px solid #EF4444;
-    color: #991B1B;
-    border-radius: 20px;
-    width: 200px;
-    padding: 8px 12px;
-    font-size: 11.5px;
-  }
-  .arrow-down {
-    width: 2px;
-    height: 30px;
-    background: #94A3B8;
-    position: relative;
-  }
-  .arrow-down::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    left: -4px;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 6px solid #94A3B8;
-  }
-  .branch-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    gap: 60px;
-    margin: 10px 0;
-  }
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    width: 860px;
-    margin: 10px 0;
-  }
-  .service-card {
-    background: #F8FAFC;
-    border: 1.5px solid #E2E8F0;
-    border-radius: 10px;
-    padding: 14px;
-    font-size: 12px;
-  }
-  .service-card strong {
+  svg {
     display: block;
-    color: #0F172A;
-    font-size: 13px;
-    margin-bottom: 4px;
+    margin: 0 auto;
   }
-  .tag {
-    display: inline-block;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 10px;
+  text {
+    font-family: 'Inter', -apple-system, sans-serif;
+  }
+  .mono {
     font-family: 'JetBrains Mono', monospace;
-    font-weight: 700;
-    margin-top: 4px;
   }
-  .tag-auth { background: #DBEAFE; color: #1E40AF; }
-  .tag-trip { background: #D1FAE5; color: #065F46; }
-  .tag-weather { background: #FEF3C7; color: #92400E; }
 </style>
 </head>
 <body>
@@ -178,418 +61,213 @@ flowchart_html = """<!DOCTYPE html>
   <div class="subtitle">Complete Execution Lifecycle from Client Ingestion to Persistence</div>
 </div>
 
-<div class="flow-container">
-  <!-- START -->
-  <div class="node node-start">START: CLIENT REQUEST</div>
-  <div class="arrow-down"></div>
+<svg width="900" height="1580" viewBox="0 0 900 1580" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Arrow marker -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748B"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#16A34A"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#2563EB"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#DC2626"/>
+    </marker>
+    
+    <!-- Drop Shadow Filter -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.06"/>
+    </filter>
+  </defs>
 
-  <!-- EXPRESS APP -->
-  <div class="node node-process">
-    <strong>Express Server & Security Pipeline</strong><br>
-    <span style="font-size: 11.5px; color: #64748B;">Port 8000 • Helmet Hardening • CORS • express.json()</span>
-  </div>
-  <div class="arrow-down"></div>
+  <!-- 1. START NODE (Y: 20 to 66) -->
+  <rect x="330" y="20" width="240" height="46" rx="23" fill="#0F172A" filter="url(#shadow)"/>
+  <text x="450" y="48" fill="#FFFFFF" font-size="13" font-weight="700" text-anchor="middle" letter-spacing="1">START: CLIENT REQUEST</text>
 
-  <!-- ROUTE DISPATCHER -->
-  <div class="node node-process">
-    <strong>Express Router Dispatcher</strong><br>
-    <span style="font-size: 11.5px; color: #64748B;">Inspects URL: /api/auth, /api/trips, /api/weather</span>
-  </div>
-  <div class="arrow-down"></div>
+  <!-- Arrow to Express Server -->
+  <line x1="450" y1="66" x2="450" y2="105" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
 
-  <!-- DECISION 1: PROTECTED ROUTE? -->
-  <div class="decision">
-    <div class="decision-inner">Protected<br>Route?</div>
-  </div>
+  <!-- 2. EXPRESS PIPELINE NODE (Y: 105 to 167) -->
+  <rect x="250" y="105" width="400" height="62" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.8" filter="url(#shadow)"/>
+  <text x="450" y="131" fill="#0F172A" font-size="13.5" font-weight="700" text-anchor="middle">Express Server &amp; Security Pipeline</text>
+  <text x="450" y="152" fill="#64748B" font-size="11.5" text-anchor="middle">Port 8000 • Helmet Hardening • CORS • express.json()</text>
 
-  <div class="branch-row">
-    <!-- YES BRANCH -->
-    <div style="display: flex; flex-direction: column; align-items: center;">
-      <div style="font-size: 12px; font-weight: 700; color: #16A34A; margin-bottom: 6px;">[ YES: Requires Auth ]</div>
-      <div class="node node-auth">
-        <strong>authMiddleware Verification</strong><br>
-        <span style="font-size: 11.5px;">Validates JWT Bearer Token / Firebase Token</span>
-      </div>
-    </div>
+  <!-- Arrow to Router -->
+  <line x1="450" y1="167" x2="450" y2="205" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
 
-    <!-- NO BRANCH -->
-    <div style="display: flex; flex-direction: column; align-items: center;">
-      <div style="font-size: 12px; font-weight: 700; color: #2563EB; margin-bottom: 6px;">[ NO: Public ]</div>
-      <div class="node node-process" style="width: 240px;">
-        <strong>Public Route Allowed</strong><br>
-        <span style="font-size: 11.5px;">Register, Login, Swagger Docs, Weather</span>
-      </div>
-    </div>
-  </div>
+  <!-- 3. EXPRESS ROUTER (Y: 205 to 267) -->
+  <rect x="250" y="205" width="400" height="62" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.8" filter="url(#shadow)"/>
+  <text x="450" y="231" fill="#0F172A" font-size="13.5" font-weight="700" text-anchor="middle">Express Router Dispatcher</text>
+  <text x="450" y="252" fill="#64748B" font-size="11.5" text-anchor="middle">Inspects URL: /api/auth, /api/trips, /api/weather</text>
 
-  <div class="arrow-down"></div>
+  <!-- Arrow to Diamond 1 (Plenty of clearance: 48px gap) -->
+  <line x1="450" y1="267" x2="450" y2="315" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
 
-  <!-- DECISION 2: TOKEN & VALIDATION VALID? -->
-  <div class="decision">
-    <div class="decision-inner">Validation &<br>Token Valid?</div>
-  </div>
+  <!-- 4. DECISION DIAMOND 1: Protected Route? (Center: 450, 365 | Height: 100, Width: 220) (Y: 315 to 415) -->
+  <polygon points="450,315 560,365 450,415 340,365" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="450" y="360" fill="#92400E" font-size="13" font-weight="700" text-anchor="middle">Protected</text>
+  <text x="450" y="377" fill="#92400E" font-size="13" font-weight="700" text-anchor="middle">Route?</text>
 
-  <div class="branch-row">
-    <div class="node node-pass" style="width: 380px;">
-      <strong>✓ Passed: User Injected into req.user</strong><br>
-      <span style="font-size: 11.5px;">express-validator checks sanitize body & params</span>
-    </div>
-    <div class="node node-fail">
-      <strong>✗ Error Intercepted</strong><br>
-      400 Bad Request / 401 Unauthorized
-    </div>
-  </div>
+  <!-- Branch YES (Left): to authMiddleware (Clearance: 70px vertical gap) -->
+  <line x1="340" y1="365" x2="250" y2="365" stroke="#16A34A" stroke-width="2"/>
+  <line x1="250" y1="365" x2="250" y2="480" stroke="#16A34A" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <text x="290" y="355" fill="#16A34A" font-size="11.5" font-weight="700">[ YES ]</text>
 
-  <div class="arrow-down"></div>
+  <!-- Branch NO (Right): to Public Route (Clearance: 70px vertical gap) -->
+  <line x1="560" y1="365" x2="675" y2="365" stroke="#2563EB" stroke-width="2"/>
+  <line x1="675" y1="365" x2="675" y2="480" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <text x="615" y="355" fill="#2563EB" font-size="11.5" font-weight="700">[ NO ]</text>
 
-  <!-- CONTROLLERS LAYER -->
-  <div style="font-weight: 800; font-size: 14px; color: #0F172A; margin: 10px 0 6px 0; text-transform: uppercase; letter-spacing: 0.5px;">
-    Controller Business Logic Execution Layer
-  </div>
+  <!-- 5. BRANCH TARGETS (Y: 480 to 548) -->
+  <!-- Left Target: authMiddleware -->
+  <rect x="70" y="480" width="360" height="68" rx="10" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="250" y="508" fill="#1E3A8A" font-size="13" font-weight="700" text-anchor="middle">authMiddleware Verification</text>
+  <text x="250" y="528" fill="#3B82F6" font-size="11" text-anchor="middle">Validates JWT Bearer Token / Firebase Token</text>
 
-  <div class="services-grid">
-    <div class="service-card">
-      <strong>Auth Controller</strong>
-      Bcrypt hash generation (cost 10) & JWT token signing.
-      <div><span class="tag tag-auth">POST /register</span> <span class="tag tag-auth">POST /login</span></div>
-    </div>
+  <!-- Right Target: Public Allowed -->
+  <rect x="520" y="480" width="310" height="68" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.8" filter="url(#shadow)"/>
+  <text x="675" y="508" fill="#1E293B" font-size="13" font-weight="700" text-anchor="middle">Public Route Allowed</text>
+  <text x="675" y="528" fill="#64748B" font-size="11" text-anchor="middle">Register, Login, Swagger Docs, Weather</text>
 
-    <div class="service-card">
-      <strong>Trip Controller</strong>
-      Ownership verification, collaborator sharing & regex search.
-      <div><span class="tag tag-trip">CRUD /trips</span> <span class="tag tag-trip">/share</span> <span class="tag tag-trip">/search</span></div>
-    </div>
+  <!-- Line from authMiddleware to Diamond 2 (Clearance: 70px gap) -->
+  <line x1="250" y1="548" x2="250" y2="620" stroke="#64748B" stroke-width="2"/>
+  <line x1="250" y1="620" x2="340" y2="670" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
 
-    <div class="service-card">
-      <strong>Itinerary Controller</strong>
-      Day-by-day scheduling, activity updates, compound indexing.
-      <div><span class="tag tag-trip">POST /itinerary</span> <span class="tag tag-trip">GET /itinerary</span></div>
-    </div>
+  <!-- Public Route line down directly on the right edge to avoid crossing any boxes -->
+  <line x1="840" y1="514" x2="870" y2="514" stroke="#2563EB" stroke-width="2"/>
+  <line x1="870" y1="514" x2="870" y2="925" stroke="#2563EB" stroke-dasharray="5,5" stroke-width="2"/>
+  <line x1="870" y1="925" x2="710" y2="925" stroke="#2563EB" stroke-dasharray="5,5" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <text x="760" y="730" fill="#2563EB" font-size="10.5" font-weight="600">Public Access Route</text>
 
-    <div class="service-card">
-      <strong>Expense & Budget</strong>
-      Total spent aggregation, balance deduction, category map.
-      <div><span class="tag tag-auth">POST /expenses</span> <span class="tag tag-auth">GET /expenses</span></div>
-    </div>
+  <!-- 6. DECISION DIAMOND 2: Validation & Token Valid? (Center: 450, 670 | Height: 100, Width: 220) (Y: 620 to 720) -->
+  <polygon points="450,620 560,670 450,720 340,670" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="450" y="663" fill="#92400E" font-size="12.5" font-weight="700" text-anchor="middle">Token &amp;</text>
+  <text x="450" y="680" fill="#92400E" font-size="12.5" font-weight="700" text-anchor="middle">Validation Valid?</text>
 
-    <div class="service-card">
-      <strong>Weather Telemetry</strong>
-      Open-Meteo geocoding & live 7-day meteorological forecast.
-      <div><span class="tag tag-weather">GET /weather</span> <span class="tag tag-weather">GET /trips/:id/weather</span></div>
-    </div>
+  <!-- Branch NO (Right): Error Intercepted (Clear horizontal layout, Y: 670) -->
+  <line x1="560" y1="670" x2="625" y2="670" stroke="#DC2626" stroke-width="2" marker-end="url(#arrow-red)"/>
+  <text x="585" y="660" fill="#DC2626" font-size="11.5" font-weight="700">[ NO ]</text>
+  <rect x="630" y="640" width="210" height="60" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="1.8" filter="url(#shadow)"/>
+  <text x="735" y="665" fill="#991B1B" font-size="11.5" font-weight="700" text-anchor="middle">✗ Error Intercepted</text>
+  <text x="735" y="683" fill="#B91C1C" font-size="10" text-anchor="middle">400 Bad Request / 401 Unauthorized</text>
 
-    <div class="service-card">
-      <strong>Media Pipeline</strong>
-      Multer memory buffer streaming to Firebase / Local disk.
-      <div><span class="tag tag-trip">POST /trips/:id/photos</span></div>
-    </div>
-  </div>
+  <!-- Branch YES (Down): to Passed Box (Clearance: 65px gap) -->
+  <line x1="450" y1="720" x2="450" y2="785" stroke="#16A34A" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <text x="460" y="755" fill="#16A34A" font-size="11.5" font-weight="700">[ YES ]</text>
 
-  <div class="arrow-down"></div>
+  <!-- 7. VALIDATION PASSED BOX (Y: 785 to 850) -->
+  <rect x="220" y="785" width="460" height="65" rx="10" fill="#ECFDF5" stroke="#10B981" stroke-width="2" filter="url(#shadow)"/>
+  <text x="450" y="812" fill="#065F46" font-size="13" font-weight="700" text-anchor="middle">✓ Validation Passed: User Injected into req.user</text>
+  <text x="450" y="833" fill="#047857" font-size="11" text-anchor="middle">express-validator rules sanitize body, query &amp; route parameters</text>
 
-  <!-- MONGODB PERSISTENCE -->
-  <div class="node node-process" style="width: 500px; background: #F1F5F9; border: 2px solid #0F172A;">
-    <strong>MongoDB Document Persistence (Mongoose ODM)</strong><br>
-    <span style="font-size: 12px; color: #475569;">Atomic Operations • Cascade Itinerary Clean-up • Schema Virtuals</span>
-  </div>
+  <!-- Arrow to Controller Layer -->
+  <line x1="450" y1="850" x2="450" y2="905" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
 
-  <div class="arrow-down"></div>
+  <!-- 8. CONTROLLERS HEADER (Y: 925) -->
+  <text x="450" y="930" fill="#0F172A" font-size="13.5" font-weight="800" text-anchor="middle" letter-spacing="1">CONTROLLER BUSINESS LOGIC EXECUTION LAYER</text>
 
-  <!-- END RESPONSE -->
-  <div class="node node-start" style="background: #16A34A; width: 340px;">
-    END: HTTP JSON RESPONSE (200 / 201)
-  </div>
-</div>
+  <!-- 9. CONTROLLER SERVICE CARDS GRID (Y: 955 to 1220) -->
+  <!-- Row 1: Auth, Trips, Itinerary -->
+  <!-- Auth Controller -->
+  <rect x="40" y="955" width="260" height="115" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.8" filter="url(#shadow)"/>
+  <text x="55" y="978" fill="#0F172A" font-size="12.5" font-weight="700">Auth Controller</text>
+  <text x="55" y="998" fill="#475569" font-size="10.5">Bcrypt hash (cost 10) &amp;</text>
+  <text x="55" y="1014" fill="#475569" font-size="10.5">JWT token generation.</text>
+  <rect x="55" y="1030" width="85" height="22" rx="4" fill="#DBEAFE"/>
+  <text x="97" y="1045" fill="#1E40AF" font-size="9.5" font-weight="700" class="mono" text-anchor="middle">POST /register</text>
+  <rect x="148" y="1030" width="75" height="22" rx="4" fill="#DBEAFE"/>
+  <text x="185" y="1045" fill="#1E40AF" font-size="9.5" font-weight="700" class="mono" text-anchor="middle">POST /login</text>
 
-</body>
-</html>
-"""
+  <!-- Trip Controller -->
+  <rect x="320" y="955" width="260" height="115" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.8" filter="url(#shadow)"/>
+  <text x="335" y="978" fill="#0F172A" font-size="12.5" font-weight="700">Trip Controller</text>
+  <text x="335" y="998" fill="#475569" font-size="10.5">Ownership check, sharing &amp;</text>
+  <text x="335" y="1014" fill="#475569" font-size="10.5">multi-field regex search.</text>
+  <rect x="335" y="1030" width="72" height="22" rx="4" fill="#D1FAE5"/>
+  <text x="371" y="1045" fill="#065F46" font-size="9.5" font-weight="700" class="mono" text-anchor="middle">CRUD /trips</text>
+  <rect x="415" y="1030" width="55" height="22" rx="4" fill="#D1FAE5"/>
+  <text x="442" y="1045" fill="#065F46" font-size="9.5" font-weight="700" class="mono" text-anchor="middle">/share</text>
+  <rect x="478" y="1030" width="60" height="22" rx="4" fill="#D1FAE5"/>
+  <text x="508" y="1045" fill="#065F46" font-size="9.5" font-weight="700" class="mono" text-anchor="middle">/search</text>
 
-# 2. MIND MAP HTML
-mindmap_html = """<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: #FFFFFF;
-    font-family: 'Inter', -apple-system, sans-serif;
-    color: #1E293B;
-    padding: 35px 25px;
-    width: 1050px;
-    margin: 0 auto;
-  }
-  .header {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  .univ {
-    font-size: 13px;
-    font-weight: 700;
-    color: #800020;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-  }
-  .title {
-    font-size: 26px;
-    font-weight: 800;
-    color: #0F172A;
-    margin: 4px 0;
-  }
-  .subtitle {
-    font-size: 13.5px;
-    color: #64748B;
-  }
-  .map-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    padding: 20px 0;
-  }
-  .center-core {
-    background: linear-gradient(135deg, #800020 0%, #4A0012 100%);
-    color: #FFFFFF;
-    padding: 26px 20px;
-    border-radius: 50%;
-    width: 220px;
-    height: 220px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    box-shadow: 0 10px 25px rgba(128, 0, 32, 0.3);
-    border: 5px solid #F8FAFC;
-    z-index: 10;
-  }
-  .center-core h2 {
-    font-size: 19px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    line-height: 1.2;
-  }
-  .center-core span {
-    font-size: 11px;
-    font-weight: 500;
-    color: #FED7D7;
-    margin-top: 6px;
-  }
-  .col {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    width: 360px;
-  }
-  .branch-card {
-    background: #FFFFFF;
-    border: 1.5px solid #E2E8F0;
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-    position: relative;
-    border-left: 5px solid #3B82F6;
-  }
-  .branch-security { border-left-color: #8B5CF6; }
-  .branch-trips { border-left-color: #10B981; }
-  .branch-collab { border-left-color: #F59E0B; }
-  .branch-storage { border-left-color: #06B6D4; }
-  .branch-weather { border-left-color: #EC4899; }
-  .branch-devops { border-left-color: #64748B; }
+  <!-- Itinerary Controller -->
+  <rect x="600" y="955" width="260" height="115" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.8" filter="url(#shadow)"/>
+  <text x="615" y="978" fill="#0F172A" font-size="12.5" font-weight="700">Itinerary Controller</text>
+  <text x="615" y="998" fill="#475569" font-size="10.5">Day-by-day timetable &amp;</text>
+  <text x="615" y="1014" fill="#475569" font-size="10.5">scheduled activity updates.</text>
+  <rect x="615" y="1030" width="90" height="22" rx="4" fill="#D1FAE5"/>
+  <text x="660" y="1045" fill="#065F46" font-size="9.5" font-weight="700" class="mono" text-anchor="middle">POST /itinerary</text>
+  <rect x="715" y="1030" width="85" height="22" rx="4" fill="#D1FAE5"/>
+  <text x="757" y="1045" fill="#065F46" font-size="9.5" font-weight="700" class="mono" text-anchor="middle">GET /itinerary</text>
 
-  .branch-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8px;
-  }
-  .branch-title {
-    font-size: 13.5px;
-    font-weight: 700;
-    color: #0F172A;
-  }
-  .badge {
-    font-size: 9.5px;
-    font-weight: 700;
-    text-transform: uppercase;
-    padding: 2px 6px;
-    border-radius: 4px;
-  }
-  .badge-purple { background: #EDE9FE; color: #6D28D9; }
-  .badge-green { background: #D1FAE5; color: #047857; }
-  .badge-amber { background: #FEF3C7; color: #B45309; }
-  .badge-cyan { background: #CFFAFE; color: #0E7490; }
-  .badge-pink { background: #FCE7F3; color: #BE185D; }
-  .badge-gray { background: #F1F5F9; color: #475569; }
+  <!-- Row 2: Expense, Weather, Media (Y: 1085 to 1200) -->
+  <!-- Expense & Budget -->
+  <rect x="40" y="1085" width="260" height="115" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.8" filter="url(#shadow)"/>
+  <text x="55" y="1108" fill="#0F172A" font-size="12.5" font-weight="700">Expense &amp; Budget</text>
+  <text x="55" y="1128" fill="#475569" font-size="10.5">Total spent aggregation &amp;</text>
+  <text x="55" y="1144" fill="#475569" font-size="10.5">category breakdown map.</text>
+  <rect x="55" y="1160" width="88" height="22" rx="4" fill="#DBEAFE"/>
+  <text x="99" y="1175" fill="#1E40AF" font-size="9.5" font-weight="700" class="mono" text-anchor="middle">POST /expenses</text>
+  <rect x="150" y="1160" width="82" height="22" rx="4" fill="#DBEAFE"/>
+  <text x="191" y="1175" fill="#1E40AF" font-size="9.5" font-weight="700" class="mono" text-anchor="middle">GET /expenses</text>
 
-  .sub-list {
-    list-style: none;
-    font-size: 11.5px;
-    color: #334155;
-    line-height: 1.6;
-  }
-  .sub-list li {
-    position: relative;
-    padding-left: 14px;
-    margin-bottom: 3px;
-  }
-  .sub-list li::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: #94A3B8;
-    font-weight: bold;
-    font-size: 14px;
-  }
-</style>
-</head>
-<body>
+  <!-- Weather Telemetry -->
+  <rect x="320" y="1085" width="260" height="115" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.8" filter="url(#shadow)"/>
+  <text x="335" y="1108" fill="#0F172A" font-size="12.5" font-weight="700">Weather Telemetry</text>
+  <text x="335" y="1128" fill="#475569" font-size="10.5">Open-Meteo geocoding &amp;</text>
+  <text x="335" y="1144" fill="#475569" font-size="10.5">7-day weather forecast.</text>
+  <rect x="335" y="1160" width="80" height="22" rx="4" fill="#FEF3C7"/>
+  <text x="375" y="1175" fill="#92400E" font-size="9.5" font-weight="700" class="mono" text-anchor="middle">GET /weather</text>
+  <rect x="422" y="1160" width="75" height="22" rx="4" fill="#FEF3C7"/>
+  <text x="459" y="1175" fill="#92400E" font-size="9.5" font-weight="700" class="mono" text-anchor="middle">/:id/weather</text>
 
-<div class="header">
-  <div class="univ">ITM Skills University • School of Future Tech</div>
-  <div class="title">TripCraft Backend Architecture Mind Map</div>
-  <div class="subtitle">Taxonomy of System Capabilities, Cryptographic Security & RESTful Services</div>
-</div>
+  <!-- Media Pipeline -->
+  <rect x="600" y="1085" width="260" height="115" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.8" filter="url(#shadow)"/>
+  <text x="615" y="1108" fill="#0F172A" font-size="12.5" font-weight="700">Media Pipeline</text>
+  <text x="615" y="1128" fill="#475569" font-size="10.5">Multer memory buffer streaming</text>
+  <text x="615" y="1144" fill="#475569" font-size="10.5">to Firebase or local disk.</text>
+  <rect x="615" y="1160" width="115" height="22" rx="4" fill="#D1FAE5"/>
+  <text x="672" y="1175" fill="#065F46" font-size="9.5" font-weight="700" class="mono" text-anchor="middle">POST /trips/:id/photos</text>
 
-<div class="map-wrapper">
-  <!-- LEFT COLUMN BRANCHES -->
-  <div class="col">
-    <!-- BRANCH 1: AUTH & SECURITY -->
-    <div class="branch-card branch-security">
-      <div class="branch-header">
-        <div class="branch-title">1. Authentication & Security</div>
-        <span class="badge badge-purple">Core Guard</span>
-      </div>
-      <ul class="sub-list">
-        <li><strong>JWT Stateless Bearer Token:</strong> HMAC-SHA256 signature with 7-day expiration.</li>
-        <li><strong>Bcrypt Salting & Hashing:</strong> Blowfish key derivation with 10 salt rounds.</li>
-        <li><strong>Dual Auth Support:</strong> Native JWT + Firebase Admin ID Token validation.</li>
-        <li><strong>OWASP Hardening:</strong> Helmet security headers & CORS policy enforcement.</li>
-      </ul>
-    </div>
+  <!-- Arrow from Controllers to MongoDB (Clearance: 60px gap) -->
+  <line x1="450" y1="1200" x2="450" y2="1275" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
 
-    <!-- BRANCH 2: TRIP & ITINERARY CORE -->
-    <div class="branch-card branch-trips">
-      <div class="branch-header">
-        <div class="branch-title">2. Trip & Itinerary Engine</div>
-        <span class="badge badge-green">Resource Hub</span>
-      </div>
-      <ul class="sub-list">
-        <li><strong>Lifecycle Management:</strong> Full CRUD operations (Planning, Ongoing, Completed).</li>
-        <li><strong>Day-by-Day Scheduling:</strong> Chronological daily activity timetables.</li>
-        <li><strong>Bookings Subdocs:</strong> Flight, hotel, and transport tracking.</li>
-        <li><strong>Atomic Cascading Cleanup:</strong> Deleting trip purges all linked itineraries.</li>
-      </ul>
-    </div>
+  <!-- 10. MONGODB PERSISTENCE LAYER (Y: 1280 to 1355) -->
+  <rect x="200" y="1280" width="500" height="75" rx="12" fill="#F1F5F9" stroke="#0F172A" stroke-width="2" filter="url(#shadow)"/>
+  <text x="450" y="1312" fill="#0F172A" font-size="14" font-weight="800" text-anchor="middle">MongoDB Document Persistence (Mongoose ODM)</text>
+  <text x="450" y="1335" fill="#475569" font-size="11.5" text-anchor="middle">Atomic Operations • Cascade Itinerary Clean-up • Schema Virtuals</text>
 
-    <!-- BRANCH 3: COLLABORATION & SEARCH -->
-    <div class="branch-card branch-collab">
-      <div class="branch-header">
-        <div class="branch-title">3. Collaborators & Search</div>
-        <span class="badge badge-amber">Multi-User</span>
-      </div>
-      <ul class="sub-list">
-        <li><strong>Role-Based Access Control:</strong> Distinct 'viewer' and 'editor' collaborator roles.</li>
-        <li><strong>Partner Invitations:</strong> Email verification & prevention of self-collaboration.</li>
-        <li><strong>Multi-Dimensional Search:</strong> Regex scanning titles, cities, countries & activities.</li>
-        <li><strong>Route Ordering Optimization:</strong> /search placed before /:id parameter interceptor.</li>
-      </ul>
-    </div>
-  </div>
+  <!-- Arrow from MongoDB to Final Output -->
+  <line x1="450" y1="1355" x2="450" y2="1425" stroke="#16A34A" stroke-width="2" marker-end="url(#arrow-green)"/>
 
-  <!-- CENTER CORE NODE -->
-  <div class="center-core">
-    <h2>TripCraft API Core</h2>
-    <span>Node.js v22 LTS<br>Express.js 5.x<br>MongoDB 9.x<br>Port 8000</span>
-  </div>
-
-  <!-- RIGHT COLUMN BRANCHES -->
-  <div class="col">
-    <!-- BRANCH 4: BUDGET & FINANCIALS -->
-    <div class="branch-card branch-storage">
-      <div class="branch-header">
-        <div class="branch-title">4. Budget & Expense Tracking</div>
-        <span class="badge badge-cyan">Advanced</span>
-      </div>
-      <ul class="sub-list">
-        <li><strong>Budget Ceilings:</strong> Multi-currency allocation (USD, EUR, INR).</li>
-        <li><strong>Expense Logging:</strong> Title, cost, category (food, lodging, transit), & payer attribution.</li>
-        <li><strong>Automated Computation:</strong> Total spent & remaining balance calculation on-the-fly.</li>
-        <li><strong>Category Breakdown:</strong> Functional reduction generating aggregated spending metrics.</li>
-      </ul>
-    </div>
-
-    <!-- BRANCH 5: METEOROLOGICAL TELEMETRY -->
-    <div class="branch-card branch-weather">
-      <div class="branch-header">
-        <div class="branch-title">5. Weather & Media Services</div>
-        <span class="badge badge-pink">External APIs</span>
-      </div>
-      <ul class="sub-list">
-        <li><strong>Open-Meteo REST Client:</strong> Free global geocoding & live weather telemetry.</li>
-        <li><strong>7-Day Meteorological Forecast:</strong> Daily temperature extrema & precipitation codes.</li>
-        <li><strong>Multer Image Streamer:</strong> Memory buffer processing for cover & memory snapshots.</li>
-        <li><strong>Dual Storage Strategy:</strong> Firebase Cloud Storage + automatic local disk fallback.</li>
-      </ul>
-    </div>
-
-    <!-- BRANCH 6: DEVOPS & DOCUMENTATION -->
-    <div class="branch-card branch-devops">
-      <div class="branch-header">
-        <div class="branch-title">6. Documentation & DevOps</div>
-        <span class="badge badge-gray">Deployment</span>
-      </div>
-      <ul class="sub-list">
-        <li><strong>OpenAPI 3.0 Swagger UI:</strong> Live interactive browser testing at <code>/api-docs</code>.</li>
-        <li><strong>Postman Collection (v2.1):</strong> Pre-configured tests with automatic token persistence.</li>
-        <li><strong>Docker Containerization:</strong> Alpine-based lightweight production container.</li>
-        <li><strong>Cloud Blueprints:</strong> Render (render.yaml) & Heroku (Procfile) deployment configs.</li>
-      </ul>
-    </div>
-  </div>
-</div>
+  <!-- 11. END NODE (Y: 1430 to 1488) -->
+  <rect x="275" y="1430" width="350" height="56" rx="28" fill="#16A34A" filter="url(#shadow)"/>
+  <text x="450" y="1465" fill="#FFFFFF" font-size="14" font-weight="800" text-anchor="middle" letter-spacing="1">END: HTTP JSON RESPONSE (200 / 201)</text>
+</svg>
 
 </body>
 </html>
 """
 
 flowchart_html_path = os.path.join(base_dir, "temp_flowchart.html")
-mindmap_html_path = os.path.join(base_dir, "temp_mindmap.html")
-
 with open(flowchart_html_path, "w", encoding="utf-8") as f:
     f.write(flowchart_html)
-with open(mindmap_html_path, "w", encoding="utf-8") as f:
-    f.write(mindmap_html)
 
 chrome_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 flowchart_png = os.path.join(screenshot_dir, "tripcraft_flowchart.png")
-mindmap_png = os.path.join(screenshot_dir, "tripcraft_mindmap.png")
 
-print("Rendering TripCraft Flowchart image...")
+print("Re-rendering TripCraft Flowchart with 100% SVG spacing (no overlapping boxes)...")
 subprocess.run([
     chrome_path,
     "--headless",
     "--disable-gpu",
     f"--screenshot={flowchart_png}",
-    "--window-size=1000,1500",
+    "--window-size=1000,1720",
     flowchart_html_path
 ], check=True)
 
-print("Rendering TripCraft Mind Map image...")
-subprocess.run([
-    chrome_path,
-    "--headless",
-    "--disable-gpu",
-    f"--screenshot={mindmap_png}",
-    "--window-size=1150,1100",
-    mindmap_html_path
-], check=True)
-
-print(f"Flowchart saved at: {flowchart_png} ({os.path.getsize(flowchart_png)} bytes)")
-print(f"Mind map saved at: {mindmap_png} ({os.path.getsize(mindmap_png)} bytes)")
-
-# Cleanup temporary html files
+print(f"Flowchart re-saved at: {flowchart_png} ({os.path.getsize(flowchart_png)} bytes)")
 if os.path.exists(flowchart_html_path): os.remove(flowchart_html_path)
-if os.path.exists(mindmap_html_path): os.remove(mindmap_html_path)
