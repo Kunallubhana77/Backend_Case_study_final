@@ -13,8 +13,10 @@ def get_base64_img(rel_path):
 def generate_report():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     
-    # Load all 19 screenshots as base64 data URIs
+    # Load all images including Mind Map and Flowchart
     images = {
+        "IMG_FLOWCHART": get_base64_img("screenshot/tripcraft_flowchart.png"),
+        "IMG_MINDMAP": get_base64_img("screenshot/tripcraft_mindmap.png"),
         "IMG_STRUCTURE": get_base64_img("screenshot/file_structure.png"),
         "IMG_MONGODB": get_base64_img("screenshot/mongodbconnect.png"),
         "IMG_RUN": get_base64_img("screenshot/run.png"),
@@ -294,6 +296,15 @@ def generate_report():
     margin: 0 auto;
   }
 
+  .diagram-img {
+    max-width: 100%;
+    max-height: 720px;
+    height: auto;
+    border-radius: 6px;
+    display: block;
+    margin: 0 auto;
+  }
+
   .screenshot-meta {
     margin-top: 10px;
     padding-top: 8px;
@@ -391,9 +402,29 @@ def generate_report():
         <td style="text-align: right;">5</td>
       </tr>
       <tr>
+        <td>3.1</td>
+        <td>Layered Architectural Pipeline & Schema Specification</td>
+        <td style="text-align: right;">5</td>
+      </tr>
+      <tr>
+        <td>3.2</td>
+        <td><strong>System Architecture & Capability Mind Map (Figure 3.1)</strong></td>
+        <td style="text-align: right;">6</td>
+      </tr>
+      <tr>
         <td><strong>4.</strong></td>
         <td><strong>Methods & Algorithms / Technology Applied</strong></td>
         <td style="text-align: right;">7</td>
+      </tr>
+      <tr>
+        <td>4.1</td>
+        <td>Cryptographic Hashing, Stateless JWT, Multi-Dimensional Search & Port Resolution</td>
+        <td style="text-align: right;">7</td>
+      </tr>
+      <tr>
+        <td>4.2</td>
+        <td><strong>Request Lifecycle & Security Verification Flowchart (Figure 4.1)</strong></td>
+        <td style="text-align: right;">8</td>
       </tr>
       <tr>
         <td><strong>5.</strong></td>
@@ -661,6 +692,25 @@ def generate_report():
   </table>
 </div>
 
+<!-- DEDICATED FULL-PAGE MIND MAP (FIGURE 3.1) -->
+<div class="page-break">
+  <h2 class="subsection-title">3.3 System Architecture & Technology Mind Map</h2>
+  <p>
+    The following structural mind map visualizes the core taxonomy of the TripCraft backend platform, illustrating the interplay between cryptographic security, the trip planning engine, multi-user collaboration, automated financial ledgers, external meteorological telemetry, and DevOps automation.
+  </p>
+  <div class="screenshot-card" style="margin-top: 15px;">
+    <div style="text-align: center; background: #FFFFFF; padding: 10px; border-radius: 6px;">
+      <img src="IMG_MINDMAP_PLACEHOLDER" class="diagram-img" alt="TripCraft Backend Architecture Mind Map">
+    </div>
+    <div class="screenshot-meta">
+      <div class="screenshot-title">Figure 3.1: TripCraft Full-Stack Architectural Capability & Domain Mind Map</div>
+      <div class="screenshot-desc">
+        Comprehensive taxonomic decomposition of TripCraft backend services across six specialized dimensions: (1) Authentication & Security, (2) Trip & Itinerary Engine, (3) Collaboration & Search, (4) Budget & Expense Tracking, (5) Weather & Media Services, and (6) Documentation & DevOps.
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- 6. SECTION 4: METHODS & ALGORITHMS -->
 <div class="page-break">
   <h1 class="section-title">4. Methods & Algorithms / Technology Applied</h1>
@@ -715,6 +765,25 @@ ControlCe  650  kunallubhana 11u IPv4  0xb43d107700785fff  TCP *:commplex-main (
   <p>
     <strong>Resolution:</strong> The backend was re-engineered and hardened to bind to standard development port <strong>8000</strong> across <code>.env</code>, <code>src/server.js</code>, <code>swagger.json</code>, and Postman configuration files, restoring full connectivity.
   </p>
+</div>
+
+<!-- DEDICATED FULL-PAGE FLOWCHART (FIGURE 4.1) -->
+<div class="page-break">
+  <h2 class="subsection-title">4.6 Request Lifecycle & Security Verification Flowchart</h2>
+  <p>
+    The flowchart below charts the end-to-end traversal of an incoming client request through the Express.js server, highlighting authentication gating, input sanitization via express-validator, controller business logic routing, Mongoose ODM database persistence, and standardized JSON response synthesis.
+  </p>
+  <div class="screenshot-card" style="margin-top: 15px;">
+    <div style="text-align: center; background: #FFFFFF; padding: 10px; border-radius: 6px;">
+      <img src="IMG_FLOWCHART_PLACEHOLDER" class="diagram-img" alt="TripCraft Request Lifecycle Flowchart">
+    </div>
+    <div class="screenshot-meta">
+      <div class="screenshot-title">Figure 4.1: TripCraft End-to-End Request Processing & Security Interception Flowchart</div>
+      <div class="screenshot-desc">
+        Deterministic architectural flow delineating public vs protected routing, JWT Bearer and Firebase token validation, express-validator schema verification, specialized controller execution, and atomic MongoDB document persistence.
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- 7. SECTION 5: IMPLEMENTATION DETAILS AND SNAPSHOTS -->
@@ -1218,6 +1287,11 @@ ControlCe  650  kunallubhana 11u IPv4  0xb43d107700785fff  TCP *:commplex-main (
     res = subprocess.run(cmd, capture_output=True, text=True)
     if res.returncode == 0 and os.path.exists(pdf_file):
         print(f"PDF successfully generated at: {pdf_file} ({os.path.getsize(pdf_file)} bytes)")
+        # Copy to KunalLubhana_Backend_Final_Report.pdf
+        kunal_pdf = os.path.join(base_dir, "KunalLubhana_Backend_Final_Report.pdf")
+        subprocess.run(["cp", pdf_file, kunal_pdf])
+        subprocess.run(["cp", html_file, os.path.join(base_dir, "KunalLubhana_Backend_Final_Report.html")])
+        print("Updated KunalLubhana_Backend_Final_Report.pdf and .html")
     else:
         print(f"Error generating PDF: {res.stderr}")
 
