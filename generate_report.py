@@ -257,16 +257,24 @@ def generate_report():
     white-space: pre-wrap;
   }
 
-  /* VERTICAL 2-PER-PAGE SCREENSHOT BOXES (UPAR NEECHE) */
+  /* VERTICAL 2-PER-PAGE SCREENSHOT BOXES (UPAR NEECHE) - CLEAN WITHOUT BORDER/FRAME */
   .screenshot-box {
-    background: #FFFFFF;
-    border: 1px solid #CBD5E1;
-    border-radius: 8px;
-    padding: 9px 12px;
-    margin-bottom: 12px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin-bottom: 22px;
+    box-shadow: none;
     page-break-inside: avoid;
     break-inside: avoid;
+  }
+
+  .screenshot-card {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
   }
 
   .screenshot-img-wrapper {
@@ -274,22 +282,26 @@ def generate_report():
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 7px;
+    margin-bottom: 8px;
+    background: transparent;
+    border: none;
+    padding: 0;
   }
 
   .screenshot-vertical-img {
     max-width: 100%;
-    max-height: 180px;
+    max-height: 195px;
     height: auto;
     object-fit: contain;
-    border-radius: 6px;
-    border: 1px solid #94A3B8;
+    border: none;
+    border-radius: 4px;
+    box-shadow: none;
     display: block;
     margin: 0 auto;
   }
 
   .screenshot-heading {
-    font-size: 9.8pt;
+    font-size: 10pt;
     font-weight: 700;
     color: #1E293B;
     margin-bottom: 5px;
@@ -297,16 +309,16 @@ def generate_report():
     align-items: center;
     gap: 8px;
     flex-wrap: wrap;
-    border-bottom: 1px solid #F1F5F9;
-    padding-bottom: 3px;
+    border: none;
+    padding: 0;
   }
 
   .screenshot-points {
     margin: 0;
-    padding-left: 18px;
-    font-size: 8.3pt;
+    padding-left: 20px;
+    font-size: 8.4pt;
     color: #334155;
-    line-height: 1.42;
+    line-height: 1.45;
   }
 
   .screenshot-points li {
@@ -321,9 +333,24 @@ def generate_report():
     max-width: 100%;
     max-height: 720px;
     height: auto;
-    border-radius: 6px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
     display: block;
     margin: 0 auto;
+  }
+
+  .screenshot-meta {
+    margin-top: 8px;
+    padding-top: 4px;
+    border: none;
+  }
+
+  .screenshot-title {
+    font-weight: 700;
+    font-size: 9.5pt;
+    color: #1A202C;
+    margin-bottom: 3px;
   }
 
   .highlight-box {
@@ -648,11 +675,9 @@ def generate_report():
   <p>
     The following structural mind map visualizes the core taxonomy of the TripCraft backend platform, illustrating the interplay between cryptographic security, the trip planning engine, multi-user collaboration, automated financial ledgers, external meteorological telemetry, and DevOps automation.
   </p>
-  <div class="screenshot-card" style="margin-top: 10px;">
-    <div style="text-align: center; background: #FFFFFF; padding: 6px; border-radius: 6px;">
-      <img src="IMG_MINDMAP_PLACEHOLDER" class="diagram-img" alt="TripCraft Backend Architecture Mind Map">
-    </div>
-    <div class="screenshot-meta">
+  <div style="margin-top: 14px; text-align: center;">
+    <img src="IMG_MINDMAP_PLACEHOLDER" class="diagram-img" alt="TripCraft Backend Architecture Mind Map">
+    <div class="screenshot-meta" style="text-align: left;">
       <div class="screenshot-title">Figure 3.1: TripCraft Full-Stack Architectural Capability & Domain Mind Map</div>
       <div class="screenshot-desc">
         Comprehensive taxonomic decomposition of TripCraft backend services across six specialized dimensions: (1) Authentication & Security, (2) Trip & Itinerary Engine, (3) Collaboration & Search, (4) Budget & Expense Tracking, (5) Weather & Media Services, and (6) Documentation & DevOps.
@@ -723,11 +748,9 @@ ControlCe  650  kunallubhana 11u IPv4  0xb43d107700785fff  TCP *:commplex-main (
   <p>
     The flowchart below charts the end-to-end traversal of an incoming client request through the Express.js server, highlighting authentication gating, input sanitization via express-validator, controller business logic routing, Mongoose ODM database persistence, and standardized JSON response synthesis.
   </p>
-  <div class="screenshot-card" style="margin-top: 10px;">
-    <div style="text-align: center; background: #FFFFFF; padding: 6px; border-radius: 6px;">
-      <img src="IMG_FLOWCHART_PLACEHOLDER" class="diagram-img" alt="TripCraft Request Lifecycle Flowchart">
-    </div>
-    <div class="screenshot-meta">
+  <div style="margin-top: 14px; text-align: center;">
+    <img src="IMG_FLOWCHART_PLACEHOLDER" class="diagram-img" alt="TripCraft Request Lifecycle Flowchart">
+    <div class="screenshot-meta" style="text-align: left;">
       <div class="screenshot-title">Figure 4.1: TripCraft End-to-End Request Processing & Security Interception Flowchart</div>
       <div class="screenshot-desc">
         Deterministic architectural flow delineating public vs protected routing, JWT Bearer and Firebase token validation, express-validator schema verification, specialized controller execution, and atomic MongoDB document persistence.
