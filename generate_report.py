@@ -15,6 +15,7 @@ def generate_report():
     
     # Load all images including Mind Map and Flowchart
     images = {
+        "IMG_CN_LOGO": get_base64_img("cn_logo.png"),
         "IMG_FLOWCHART": get_base64_img("screenshot/tripcraft_flowchart.png"),
         "IMG_MINDMAP": get_base64_img("screenshot/tripcraft_mindmap.png"),
         "IMG_STRUCTURE": get_base64_img("screenshot/file_structure.png"),
@@ -72,106 +73,17 @@ def generate_report():
     break-after: page;
   }
 
-  /* COVER PAGE */
+  /* EXACT CN-REPORT COVER PAGE */
   .cover-container {
-    min-height: 94vh;
+    height: 92vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    text-align: center;
-    padding: 35px 20px;
-    border: 3px double #CBD5E0;
-    background: linear-gradient(180deg, #FFFFFF 0%, #F7FAFC 100%);
-  }
-
-  .cover-header {
-    border-bottom: 2.5px solid #800020;
-    padding-bottom: 18px;
-  }
-
-  .university-title {
-    font-size: 24pt;
-    font-weight: 800;
-    color: #800020;
-    letter-spacing: 1px;
-    margin: 0;
-    text-transform: uppercase;
-  }
-
-  .school-title {
-    font-size: 15pt;
-    font-weight: 600;
-    color: #4A5568;
-    margin: 8px 0 0 0;
-    letter-spacing: 0.5px;
-  }
-
-  .cover-body {
-    margin: auto 0;
-  }
-
-  .case-badge {
-    display: inline-block;
-    background: #800020;
-    color: #FFFFFF;
-    font-size: 11.5pt;
-    font-weight: 700;
-    padding: 7px 24px;
-    border-radius: 30px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 15px;
-  }
-
-  .report-main-title {
-    font-size: 22pt;
-    font-weight: 800;
-    color: #1A202C;
-    margin: 10px 0;
-    line-height: 1.3;
-  }
-
-  .report-sub-title {
-    font-size: 13.5pt;
-    color: #4A5568;
-    font-weight: 500;
-    margin: 6px 0 22px 0;
-  }
-
-  .tech-pills {
-    display: flex;
     justify-content: center;
-    gap: 10px;
-    margin-top: 15px;
-    flex-wrap: wrap;
-  }
-
-  .tech-pill {
-    background: #EDF2F7;
-    border: 1px solid #CBD5E0;
-    color: #2D3748;
-    padding: 5px 12px;
-    border-radius: 16px;
-    font-size: 9pt;
-    font-weight: 600;
-  }
-
-  .cover-footer {
-    border-top: 2.5px solid #800020;
-    padding-top: 22px;
-    text-align: left;
-    display: flex;
-    justify-content: space-between;
-    background: #FFFFFF;
-  }
-
-  .submission-meta {
-    font-size: 9.5pt;
-    line-height: 1.7;
-  }
-
-  .submission-meta strong {
-    color: #1A202C;
+    align-items: center;
+    text-align: center;
+    padding: 30px 20px;
+    background: #ffffff;
+    box-sizing: border-box;
   }
 
   /* HEADINGS */
@@ -257,14 +169,13 @@ def generate_report():
     white-space: pre-wrap;
   }
 
-  /* VERTICAL 2-PER-PAGE SCREENSHOT BOXES (UPAR NEECHE) - CLEAN WITHOUT BORDER/FRAME */
+  /* VERTICAL 2-PER-PAGE SCREENSHOT BOXES (UPAR NEECHE) - FULL PAGE USAGE */
   .screenshot-box {
     background: transparent;
     border: none;
     border-radius: 0;
     padding: 0;
-    margin-bottom: 22px;
-    box-shadow: none;
+    margin-bottom: 18px;
     page-break-inside: avoid;
     break-inside: avoid;
   }
@@ -282,29 +193,30 @@ def generate_report():
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     background: transparent;
     border: none;
     padding: 0;
   }
 
   .screenshot-vertical-img {
-    max-width: 100%;
-    max-height: 195px;
+    width: auto;
+    max-width: 98%;
+    max-height: 245px;
     height: auto;
     object-fit: contain;
     border: none;
-    border-radius: 4px;
     box-shadow: none;
     display: block;
     margin: 0 auto;
   }
 
   .screenshot-heading {
-    font-size: 10pt;
+    font-size: 11pt;
     font-weight: 700;
     color: #1E293B;
-    margin-bottom: 5px;
+    margin-top: 6px;
+    margin-bottom: 8px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -315,14 +227,14 @@ def generate_report():
 
   .screenshot-points {
     margin: 0;
-    padding-left: 20px;
-    font-size: 8.4pt;
+    padding-left: 24px;
+    font-size: 9.1pt;
     color: #334155;
-    line-height: 1.45;
+    line-height: 1.48;
   }
 
   .screenshot-points li {
-    margin-bottom: 2px;
+    margin-bottom: 4px;
   }
 
   .screenshot-points strong {
@@ -365,41 +277,38 @@ def generate_report():
 </head>
 <body>
 
-<!-- 1. COVER PAGE -->
+<!-- 1. COVER PAGE (EXACTLY MATCHING CN REPORT) -->
 <div class="cover-container page-break">
-  <div class="cover-header">
-    <h1 class="university-title">ITM SKILLS UNIVERSITY</h1>
-    <h2 class="school-title">School of Future Tech</h2>
+  <div style="margin-bottom: 45px;">
+    <img src="IMG_CN_LOGO_PLACEHOLDER" style="width: 320px; height: auto; display: block; margin: 0 auto;" alt="ITM Skills University">
+  </div>
+  
+  <div style="font-size: 26pt; font-weight: 700; color: #000000; margin-bottom: 35px; letter-spacing: 0.5px;">
+    School of Future Tech
   </div>
 
-  <div class="cover-body">
-    <div class="case-badge">Case Study Report NO 96</div>
-    <div class="report-main-title">TripCraft — Travel Itinerary Planner</div>
-    <div class="report-sub-title">Full-Stack Enterprise REST API Backend Development</div>
-    
-    <div class="tech-pills">
-      <span class="tech-pill">Node.js</span>
-      <span class="tech-pill">Express.js</span>
-      <span class="tech-pill">MongoDB & Mongoose</span>
-      <span class="tech-pill">JWT & Bcrypt</span>
-      <span class="tech-pill">Firebase Cloud Storage</span>
-      <span class="tech-pill">Swagger OpenAPI 3.0</span>
-    </div>
+  <div style="font-size: 22pt; font-weight: 700; color: #000000; margin-bottom: 25px;">
+    Case Study Report NO 96
   </div>
 
-  <div class="cover-footer">
-    <div class="submission-meta">
-      <div><strong>Submitted By:</strong> Kunal Lubhana</div>
-      <div><strong>Enrollment No:</strong> 150096725022</div>
-      <div><strong>Program:</strong> B.Tech Computer Science and Engineering</div>
-      <div><strong>Batch:</strong> 2025 – 2029</div>
-    </div>
-    <div class="submission-meta" style="text-align: right;">
-      <div><strong>Subject:</strong> Backend Development</div>
-      <div><strong>Domain:</strong> Node.js, Express.js & MongoDB</div>
-      <div><strong>Semester:</strong> 3</div>
-      <div><strong>Academic Year:</strong> 2026–2027</div>
-    </div>
+  <div style="font-size: 18pt; font-weight: 400; color: #222222; margin-bottom: 25px;">
+    on
+  </div>
+
+  <div style="font-size: 18pt; font-weight: 700; color: #000000; max-width: 85%; margin: 0 auto 40px auto; line-height: 1.4;">
+    TripCraft — Travel Itinerary Planner<br>Backend API Development
+  </div>
+
+  <div style="font-size: 16pt; font-weight: 400; color: #222222; margin-bottom: 25px;">
+    by
+  </div>
+
+  <div style="font-size: 15pt; font-weight: 700; color: #000000; margin-bottom: 6px;">
+    Kunal Lubhana
+  </div>
+
+  <div style="font-size: 15pt; font-weight: 700; color: #000000;">
+    150096725022
   </div>
 </div>
 
@@ -763,17 +672,13 @@ ControlCe  650  kunallubhana 11u IPv4  0xb43d107700785fff  TCP *:commplex-main (
 
 <!-- PAGE 1 OF SECTION 5 -->
 <div class="page-break">
-  <h1 class="section-title">5. Problem Statement / Case Study Implementation Details and Snapshots</h1>
-  <p>
-    This section documents the end-to-end verification of all nineteen implementation artifacts captured during comprehensive test execution. Each artifact is presented with technical specifications, database actions, and empirical verification results.
-  </p>
-
-  <h2 class="subsection-title">5.1 Environment Architecture & Database Connectivity</h2>
+  <h1 class="section-title" style="margin-top: 14px; margin-bottom: 6px;">5. Implementation Details and Snapshots</h1>
+  <h2 class="subsection-title" style="margin-top: 8px; margin-bottom: 8px;">5.1 Environment Architecture & Database Connectivity</h2>
 
   <!-- FIGURE 5.1: FILE STRUCTURE -->
-  <div class="screenshot-box">
-    <div class="screenshot-img-wrapper">
-      <img src="IMG_STRUCTURE_PLACEHOLDER" class="screenshot-vertical-img" alt="Modular Enterprise Directory Structure">
+  <div class="screenshot-box" style="margin-bottom: 10px;">
+    <div class="screenshot-img-wrapper" style="margin-bottom: 6px;">
+      <img src="IMG_STRUCTURE_PLACEHOLDER" class="screenshot-vertical-img" style="max-height: 175px;" alt="Modular Enterprise Directory Structure">
     </div>
     <div class="screenshot-heading">Figure 5.1: Modular Enterprise Directory Structure</div>
     <ul class="screenshot-points">
@@ -785,9 +690,9 @@ ControlCe  650  kunallubhana 11u IPv4  0xb43d107700785fff  TCP *:commplex-main (
   </div>
 
   <!-- FIGURE 5.2: MONGODB CONNECT -->
-  <div class="screenshot-box">
-    <div class="screenshot-img-wrapper">
-      <img src="IMG_MONGODB_PLACEHOLDER" class="screenshot-vertical-img" alt="MongoDB Connection Established">
+  <div class="screenshot-box" style="margin-bottom: 14px;">
+    <div class="screenshot-img-wrapper" style="margin-bottom: 8px;">
+      <img src="IMG_MONGODB_PLACEHOLDER" class="screenshot-vertical-img" style="max-height: 175px;" alt="MongoDB Connection Established">
     </div>
     <div class="screenshot-heading">Figure 5.2: MongoDB Connection Established & Collection Indexing</div>
     <ul class="screenshot-points">
@@ -1140,14 +1045,8 @@ ControlCe  650  kunallubhana 11u IPv4  0xb43d107700785fff  TCP *:commplex-main (
   </ol>
 
   <h1 class="section-title" style="margin-top: 35px;">8. References</h1>
-  <ol style="font-size: 9pt; line-height: 1.75;">
-    <li><strong>Express.js Documentation:</strong> Routing, Middleware and Error Handling. <a href="https://expressjs.com/">https://expressjs.com/</a></li>
-    <li><strong>Mongoose ODM Guide:</strong> Schemas, Models, Indexes, and Population. <a href="https://mongoosejs.com/docs/guide.html">https://mongoosejs.com/docs/guide.html</a></li>
-    <li><strong>RFC 7519:</strong> JSON Web Token (JWT) Standard. Internet Engineering Task Force (IETF). <a href="https://tools.ietf.org/html/rfc7519">https://tools.ietf.org/html/rfc7519</a></li>
-    <li><strong>OWASP Foundation:</strong> Authentication Cheat Sheet and Password Storage Guidelines. <a href="https://cheatsheetseries.owasp.org/">https://cheatsheetseries.owasp.org/</a></li>
-    <li><strong>OpenAPI Specification (v3.0.0):</strong> Standard for RESTful API Documentation. <a href="https://spec.openapis.org/oas/v3.0.0">https://spec.openapis.org/oas/v3.0.0</a></li>
-    <li><strong>Open-Meteo Weather API:</strong> Free Weather Forecast API for Non-Commercial and Commercial use. <a href="https://open-meteo.com/">https://open-meteo.com/</a></li>
-    <li><strong>ITM Skills University:</strong> B.Tech Computer Science Engineering Backend Development Curriculum Specification, Case Study 96.</li>
+  <ol style="font-size: 10pt; line-height: 1.7; margin-top: 10px;">
+    <li>Notes PDF which was provided by faculty member</li>
   </ol>
 </div>
 
